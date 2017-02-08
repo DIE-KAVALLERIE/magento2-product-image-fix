@@ -1,10 +1,8 @@
 Product Image Fix
 ===================
 
-### Fixes Magento 2 GitHub issue #6803
-
 This module is meant as temporary fix for [the issue #6803](https://github.com/magento/magento2/issues/6803).
-So after installing this module the method Product::addImageToMediaGallery should work as expected.
+So after installing this module the method Product::addImageToMediaGallery should work as expected when saving an product per product repository.
 
 **Please note:**
 When Magento Inc. will have fixed this issue then this module should be uninstalled!
@@ -22,10 +20,9 @@ Please go to the Magento2 root directory and run the following commands in the s
 
 ```
 composer config repositories.diekavallerie_product-image-fix vcs git@github.com:DIE-KAVALLERIE/magento2-product-image-fix.git
-composer require DIE-KAVALLERIE/magento2-product-image-fix:dev-master
+composer require diekavallerie/product-image-fix:dev-master
 bin/magento module:enable DieKavallerie_ProductImageFix
 bin/magento setup:upgrade
-bin/magento magesetup:setup:run <countrycode>
 ```
 
 ### Manually
@@ -35,7 +32,6 @@ Please create the directory *app/code/DieKavallerie/ProductImageFix* and copy th
 ```
 bin/magento module:enable DieKavallerie_ProductImageFix
 bin/magento setup:upgrade
-bin/magento magesetup:setup:run <countrycode>
 ```
 
 
