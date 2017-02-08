@@ -1,0 +1,30 @@
+{
+  "name": "diekavallerie/product-image-fix",
+  "description": "This module is an fix for Magento2 GitHub issue #6803",
+  "license": "OSL-3.0",
+  "authors": [
+        {
+            "name": "Andreas Vennemann",
+            "email": "vennemann@diekavallerie.de",
+            "homepage": "http://diekavallerie.de",
+            "role": "Developer"
+        },
+        {
+            "name": "Eduard Kistner",
+            "email": "kistner@diekavallerie.de",
+            "homepage": "http://diekavallerie.de",
+            "role": "Developer"
+        }
+    ],
+  "require": {
+    "magento/magento-composer-installer": "*"
+  },
+  "type": "magento2-module",
+  "version": "0.1.0",
+  "autoload": {
+    "files": ["src/registration.php"],
+    "psr-4": {
+      "DieKavallerie\\ProductImageFix\\": "src/"
+    }
+  }
+}
