@@ -1,3 +1,10 @@
+## 0.1.1
+
+### Changed
+
+- Corrected image processing while product repository saves
+- Added possibly set media attributes down the line
+
 ## 0.1.0
 
 ### Added
