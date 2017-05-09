@@ -209,7 +209,6 @@ class ProductRepository extends ParentProductRepository
             $newEntries = $mediaGalleryEntries;
         }
 
-        $this->getMediaGalleryProcessor()->clearMediaAttribute($product, array_keys($product->getMediaAttributes()));
         $images = $product->getMediaGallery('images');
         if ($images) {
             foreach ($images as $image) {
@@ -222,7 +221,9 @@ class ProductRepository extends ParentProductRepository
         foreach ($newEntries as $newEntry) {
 
             if (isset($newEntry['file'])) {
-                $this->getMediaGalleryProcessor()->setMediaAttribute($product, $newEntry['types'], $newEntry['file']);
+                if (!empty($newEntry['types'])) {
+                    $this->getMediaGalleryProcessor()->setMediaAttribute($product, $newEntry['types'], $newEntry['file']);
+                }
                 continue;
             }
 
