@@ -32,6 +32,52 @@ use Magento\Framework\Exception\CouldNotSaveException;
 class ProductRepository extends ParentProductRepository
 {
     /**
+     * Merge data from DB and updates from request
+     *
+     * @param array $productData
+     * @param bool $createNew
+     * @return \Magento\Catalog\Api\Data\ProductInterface|Product
+     * @throws NoSuchEntityException
+     */
+    protected function initializeProductData(array $productData, $createNew)
+    {
+        if ($createNew) {
+            $product = $this->productFactory->create();
+            if ($this->storeManager->hasSingleStore()) {
+                $product->setWebsiteIds([$this->storeManager->getStore(true)->getWebsiteId()]);
+            }
+        } else {
+            unset($this->instances[$productData['sku']]);
+            $product = $this->get($productData['sku']);
+        }
+
+        foreach ($productData as $key => $value) {
+            $product->setData($key, $value);
+        }
+        $this->assignProductToWebsites($product);
+
+        return $product;
+    }
+
+    /**
+     * @param \Magento\Catalog\Model\Product $product
+     * @return void
+     */
+    private function assignProductToWebsites(\Magento\Catalog\Model\Product $product)
+    {
+        if (!$this->storeManager->hasSingleStore()) {
+
+            if ($this->storeManager->getStore()->getCode() == \Magento\Store\Model\Store::ADMIN_CODE) {
+                $websiteIds = array_keys($this->storeManager->getWebsites());
+            } else {
+                $websiteIds = [$this->storeManager->getStore()->getWebsiteId()];
+            }
+
+            $product->setWebsiteIds(array_unique(array_merge($product->getWebsiteIds(), $websiteIds)));
+        }
+    }
+
+    /**
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
